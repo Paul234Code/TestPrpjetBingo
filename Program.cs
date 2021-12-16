@@ -127,7 +127,7 @@ namespace TestPrpjetBingo
                 i++; 
                 
             }
-            Console.WriteLine();
+            Console.WriteLine(); 
         }
         // Fonction qui permet d'afficher la carte de l'annonceur
         public void AfficheAnnonceur(int[,] tab)
