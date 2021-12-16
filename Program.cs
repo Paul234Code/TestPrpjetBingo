@@ -1,52 +1,47 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 
 namespace TestPrpjetBingo
 {
     internal class Program
     {
-         static void Main(string[] args)
+        static void Main(string[] args)
         {
             //Dictionary<char, int[]> Boulier = new Dictionary<char, int[]>();
             var EnsembleCarteJoueur = new Dictionary<int, int[,]>();
-            int[,] Carte1 = new int[15, 5];
-            int[,] Carte2 = new int[5, 5];
-            int[,] Carte3 = new int[5, 5];
-            int[,] Carte4 = new int[5, 5];
-            Program program = new Program();          
-            Console.WriteLine("Carte de Annonceur:");
+            int[,] Annonceur = new int[15, 5];
+            int[,] Joueur1 = new int[5, 5];
+            int[,] Joueur2 = new int[5, 5];
+            int[,] Joueur3 = new int[5, 5];
+            int[,] Joueur4 = new int[5, 5];
+            Program program = new Program();
+            Console.WriteLine("Carte Annonceur sans tirage de boule :");
             Console.WriteLine();
-            program.AfficheAnnonceur(Carte1);
+            program.AfficheAnnonceur(Annonceur);
             Console.WriteLine("==================================================================");
-            Console.WriteLine("Carte2:");
-            program.AfficheAnnonceur(Carte2);
+            Console.WriteLine("J" +
+                "oueur 1 :");
+            program.AfficheAnnonceur(Joueur1);
             Console.WriteLine("==================================================================");
-            Console.WriteLine("Carte3:");
-            program.AfficheAnnonceur(Carte3);
+            Console.WriteLine("Joueur 2: ");
+            program.AfficheAnnonceur(Joueur2);
             Console.WriteLine();
             Console.WriteLine("==================================================================");
-            List<int> liste = new List<int>()
-            { 12,13,24,10,30,49,56,67,90};
-            List<int> liste1 = liste.GetRange(0, 5);
-            liste1.Sort();
-            int[] tab = liste1.ToArray();
-            for (int i = 0; i < tab.Length; i++)
-            {
-                Console.WriteLine(tab[i]);
-            }
-
+            Console.WriteLine("Joueur 3: ");
+            program.AfficheAnnonceur(Joueur3);
+            Console.WriteLine("==================================================================");
             // L'ensemble des carte du joeur
             EnsembleCarteJoueur.EnsureCapacity(1);
-            EnsembleCarteJoueur.Add(1, Carte1);
-            EnsembleCarteJoueur.Add(2, Carte2);
-            EnsembleCarteJoueur.Add(3, Carte3);
-            EnsembleCarteJoueur.Add(4, Carte4);
+            EnsembleCarteJoueur.Add(1, Joueur1);
+            EnsembleCarteJoueur.Add(2, Joueur2);
+            EnsembleCarteJoueur.Add(3, Joueur3);
+            EnsembleCarteJoueur.Add(4, Joueur4);
             int[,] carteJoueur = new int[5, 5];
+            Joueur1[2, 1] = 23;
+            program.AfficheAnnonceur(Joueur1);
             Console.WriteLine("======================================================================");
-            Carte1[2, 1] = 23;
-            program.AfficheAnnonceur(Carte1);
-            Console.WriteLine("======================================================================");
-            program.AfficheAnnonceur(carteJoueur);         
+            program.AfficheAnnonceur(carteJoueur);
             Console.WriteLine("======================================================================");
             int[,] Tableau = new int[,]
             {
@@ -66,13 +61,26 @@ namespace TestPrpjetBingo
                 {14,29,44,59,74 },
                 {15,30,45,60,75 }
             };
-            program.AfficheAnnonceur(Tableau);
-            bool trouver = program.Verifier(Tableau, 3);
-            Console.WriteLine("oui 65 est dans le tableau = "+trouver);              
-        }
 
+            program.AfficheAnnonceur(Tableau);
+            bool trouver = program.Verifier(Tableau, 60);
+            Console.WriteLine("oui 65 est dans le tableau = " + trouver);
+            Console.WriteLine("=======================================================================");
+            program.AfficheAnnonceur(Tableau);
+            List<int> liste2 = new List<int>() {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
+                                                 16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,
+                                                 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,
+                                                  46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,
+                                                  61,62,63,64,65,66,67,68,69,70,71,72,73,74,75};
+            Console.WriteLine("nombre element = " + liste2[74]);
+            int[,] liste3 = program.CreerCarteJoueur(liste2);
+            Console.WriteLine("===================================================================");
+            program.AfficheAnnonceur(liste3);
+        }
+        
+        
         // Fonction qui permet de verifier si un entier ou une boule dans le tableau
-        // fonction a utilser dans pour verifier qu'une boole tirée est present dans la carte 
+        // fonction a utilser dans pour verifier qu'une boole tirée est present dans la carte  du joueur
         public bool Verifier(int[,] Tableau, int numero)
         {
             bool trouve = false;
@@ -84,6 +92,7 @@ namespace TestPrpjetBingo
                     if (Tableau[ligne,colonne] == numero)
                     {
                         trouve = true;
+                        Tableau[ligne,colonne] = 0;
                         break;
                     }
                     else
@@ -96,26 +105,76 @@ namespace TestPrpjetBingo
             return trouve;
         }
         // Fonction qui permet de construire une carte du joueur
-        public int[,] CreerCarteJoueur(int[,] Tab,int numeroColonne)
+        public int[,] CreerCarteJoueur(List<int> liste)
         {
             int[,] Tableau = new int[5, 5];
-            Random random = new Random();
             Tableau[2, 2] = 0;
-            Tableau[2, 3] = 0;
-            int ligne = random.Next(Tableau.GetLength(0));
-            int colonne  = random.Next(Tableau.GetLength(1));
-            int compteur = 0;
-            int randomNumber = Tab[ligne,colonne];
-            while (compteur < 100)
+            List<int> listeB = Construire(liste,1,15);
+            List<int> listeI = Construire(liste,16,30);
+            List<int> listeN = ConstruireMilieu(liste,31,45);
+            List<int> listeG = Construire(liste,46,60);
+            List<int> listeO = Construire(liste,61,75);           
+            for(int i = 0; i < listeB.Count-1; i++)
             {
-                if(randomNumber <= 15)
+                Tableau[i,0] = listeB[i];
+                Tableau[i,1] = listeI[i];
+                Tableau[i,3] = listeG[i];
+                Tableau[i,4] = listeO[i];
+            }
+            for(int j = 0;j < listeI.Count - 1; j++)
+            {
+                if(j == 2)
                 {
-
-
+                    continue;
+                }
+                else
+                {
+                    Tableau[j,2] = listeN[j];
                 }
             }
            return Tableau;
         }
+        // permet de construire les colonnes B,I,G,0
+        public List<int>Construire(List<int> liste, int minimum,int maximum)
+        {
+            List<int> listeB = new List<int>();
+            Random random = new Random();
+            while (listeB.Count < 6)
+            {
+                int indice = random.Next(0, liste.Count);
+                int randomNumber = liste[indice];
+                if (minimum <= randomNumber && randomNumber <= maximum)
+                {
+                    if (!listeB.Contains(randomNumber))
+                    {
+                        listeB.Add(randomNumber);
+                        liste.Remove(indice);
+                    }
+                }               
+            }
+            return listeB;
+        }
+        // fonction qui construit la colonne du milieu
+        public List<int> ConstruireMilieu(List<int> liste, int minimum, int maximum)
+        {
+            List<int> listeB = new List<int>();
+            Random random = new Random();
+            while (listeB.Count < 5)
+            {
+                int indice = random.Next(0, liste.Count);
+                int randomNumber = liste[indice];
+                if (minimum <= randomNumber && randomNumber <= maximum)
+                {
+                    if (!listeB.Contains(randomNumber))
+                    {
+                        listeB.Add(randomNumber);
+                        liste.Remove(indice);
+                    }
+                }
+            }
+            return listeB;
+        }
+
 
         // Rechercher une carte dans le dictionnaire par son numero
         public int[,] RechercherCarte(Dictionary<int, int[,]> dictionnaire)
@@ -156,7 +215,6 @@ namespace TestPrpjetBingo
                     Console.Write("\t" + tab[i, j] + "\t");
                 }
                 i++;
-
             }
             Console.WriteLine();
         }
@@ -176,6 +234,7 @@ namespace TestPrpjetBingo
                 i++;
             }
         }
+        // Fonction qui permet d'afficher une carte du joueur,le boulier, la carte de l'annonceur
         public void AfficherTableau(int[] tab)
         {
             for (int i = 0; i < tab.Length; i++)
