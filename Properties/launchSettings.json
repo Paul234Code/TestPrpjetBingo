@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestPrpjetBingo": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
