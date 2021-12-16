@@ -124,7 +124,7 @@ namespace TestPrpjetBingo
                 {
                     Console.Write("\t" + tab[i, j] + "\t");
                 } 
-                i++;
+                i++; 
                 
             }
             Console.WriteLine();
