@@ -97,7 +97,7 @@ namespace TestPrpjetBingo
             int colonne = random.Next(0, 5);
             Console.WriteLine("Boule Tire au hasard = " + Tableau[ligne, colonne]);
             bool trouver = new Program().Verifier(Tableau, 60);
-            Console.WriteLine("Bienvenue dans C#");
+            Console.WriteLine("Bienvenue dans C#" + trouver);
 
 
         }
