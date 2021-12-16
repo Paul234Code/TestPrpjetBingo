@@ -14,7 +14,17 @@ namespace TestPrpjetBingo
             int[,] Carte2 = new int[5, 5];
             int[,] Carte3 = new int[5, 5];
             int[,] Carte4 = new int[5, 5];
+            Console.WriteLine("Carte de Annonceur:");
+            Console.WriteLine();
             new Program().AfficheAnnonceur(Carte1);
+            Console.WriteLine("==================================================================");
+            Console.WriteLine("Carte2:");
+            new Program().AfficheAnnonceur(Carte2);
+            Console.WriteLine("==================================================================");
+            Console.WriteLine("Carte3:");
+            new Program().AfficheAnnonceur(Carte3);
+            Console.WriteLine();
+            Console.WriteLine("==================================================================");
             List<int> liste = new List<int>()
             { 12,13,24,10,30,49,56,67,90};
             List<int> liste1 =  liste.GetRange(0,5);
@@ -31,16 +41,13 @@ namespace TestPrpjetBingo
             EnsembleCarteJoueur.Add(2, Carte2);
             EnsembleCarteJoueur.Add(3,Carte3);
             EnsembleCarteJoueur.Add(4, Carte4);
-
-           
-            
-
             Boulier['B'] = new int[] {1,2,3,4,5 };
             Boulier['I'] = new int[] { 6, 7, 8, 9, 10 };
             Boulier['N'] = new int[] { 11, 12, 0, 13, 15 };
             Boulier['G'] = new int[] { 16, 17, 18, 19, 20 };
             Boulier['O'] = new int[] { 21, 22, 23, 24, 25 };
             
+
 
 
 
@@ -69,21 +76,57 @@ namespace TestPrpjetBingo
             Console.WriteLine("======================================================================");
             int[,] Tableau = new int[,]
             {
-                {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-                { 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
-                { 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45},
-                { 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60},
-                {61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75 }
-
+                {1,16,31,46,61 },
+                {2,17,32,47,62},
+                {3,18,33,48,63},
+                {4,19,34,49,64 },
+                {5,20,35,50,65 },
+                {6,21,36,51,66 },
+                {7,22,37,52,67 },
+                {8,23,38,53,68 },
+                {9,24,39,54,69 },
+                {10,25,40,55,70 },
+                {11,26,41,56,71 },
+                {12,27,42,57,72 },
+                {13,28,43,58,73 },
+                {14,29,44,59,74 },
+                {15,30,45,60,75 }               
             };
-            new Program().AfficheAnnonceur(Tableau);
+            //new Program().AfficheAnnonceur(Tableau);
             Random random = new Random();
             int ligne = random.Next(0, 15);
             int colonne = random.Next(0, 5);
-
+            Console.WriteLine("Boule Tire au hasard = "+ Tableau[ligne,colonne]);
+            bool trouver = new Program().Verifier(Tableau, 60);
+            Console.WriteLine("Bienvenue dans C#" );
 
 
         }
+        // Fonction qui permet de verifier si un entier ou une boule dans le tableau
+        public bool Verifier( int[,] Tableau ,int numero)
+        {
+             bool trouve = false;
+            int ligne= 0;
+            int colonne = 0;
+            while(ligne < Tableau.GetLength(0))
+            {
+                while(colonne < Tableau.GetLength(1))
+                {
+                    if(Tableau[ligne, colonne] == numero)
+                    {
+                        trouve = true;
+                    }
+                    else
+                    {
+                        trouve=false;
+                    }
+                }
+            }
+            return trouve;
+
+        }
+        
+
         // Rechercher une carte dans le dictionnaire par son numero
         public int[,] RechercherCarte(Dictionary<int,int[,]> dictionnaire)
         {
@@ -104,8 +147,7 @@ namespace TestPrpjetBingo
                     {
                         tab = null;
                     }
-                }
-                
+                }               
             }
             else
             {
@@ -132,17 +174,17 @@ namespace TestPrpjetBingo
         // Fonction qui permet d'afficher la carte de l'annonceur
         public void AfficheAnnonceur(int[,] tab)
         {
-            int j = 0;
+            int i = 0;
             Console.WriteLine($"{'B'}\t{'I'}\t{'N'}\t{'G'}\t{'O'}");
-            while (j < tab.GetLength(1))
+            while (i < tab.GetLength(0))
             {
-                for(int i = 0; i< tab.GetLength(0); i++)
+                for(int j = 0; j< tab.GetLength(1); j++)
                 {
                     Console.Write($"{tab[i,j]}\t");
 
                 }
                 Console.WriteLine();
-                j++;
+                i++;
             }
         }
         public void AfficherTableau(int[] tab)
