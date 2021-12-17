@@ -59,20 +59,29 @@ namespace TestPrpjetBingo
 
             int[,] carte1 = program.CreerCarteJoueur(liste2);
             int[,] carte2 = program.CreerCarteJoueur(liste2);
-            int[,] carte3 = program.CreerCarteJoueur(liste2);           
-            program.AfficheAnnonceur(carte1);           
+            int[,] carte3 = program.CreerCarteJoueur(liste2);
+            program.AfficheAnnonceur(carte1);
             program.AfficheAnnonceur(carte2);
             program.AfficheAnnonceur(carte3);
-            int valeur1 = new Random().Next(0,liste2.Count);
-            int valeur2 = new Random().Next(0, liste2.Count);
-            Console.WriteLine("valeur1 = "+valeur1);
-            Console.WriteLine("valeur2 = " + valeur2);
-            program.Ajouter(Annonceur,valeur1);
-            program.Ajouter(Annonceur, valeur2);
+            int compteur = 75;
+           var myEnumerator =  liste2.GetEnumerator();
+            while(compteur>50)
+            {
+                int valeur = program.RandomBall(liste2);
+                program.Ajouter(Annonceur, valeur);
+                compteur--;
+            }          
             program.AfficheAnnonceur(Annonceur);
         }
-
-
+        // Fonction qui permet de retirer une boule au hazard dans le boulier
+        public int RandomBall(List<int> liste)
+        {
+            Random random = new Random();
+            int index = random.Next(0, liste.Count);
+            int valeur = liste[index];
+            liste.RemoveAt(index);
+            return valeur;
+        }
         // Fonction qui permet de verifier si un entier ou une boule dans le tableau
         // fonction a utilser dans pour verifier qu'une boole tirée est present dans la carte  du joueur
         public bool Verifier(int[,] Tableau, int numero)
@@ -202,7 +211,7 @@ namespace TestPrpjetBingo
             }
             return listeB;
         }
-        // fonction qui construit la colonne du milieu
+        // fonction qui construit la colonne du milieu N
         public List<int> ConstruireMilieu(List<int> liste, int minimum, int maximum)
         {
             List<int> listeB = new List<int>();
@@ -224,7 +233,7 @@ namespace TestPrpjetBingo
         }
 
 
-        // Rechercher une carte dans le dictionnaire par son numero
+        // Rechercher une carte dans le dictionnaire par son numero pour ensuite l'afficher
         public int[,] RechercherCarte(Dictionary<int, int[,]> dictionnaire)
         {
             Console.WriteLine("Combien de carte voulez-vous afficher:(max 4)");
