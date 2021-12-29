@@ -60,11 +60,36 @@ namespace TestPrpjetBingo
             int[,] carte1 = program.CreerCarteJoueur(liste2);
             int[,] carte2 = program.CreerCarteJoueur(liste2);
             int[,] carte3 = program.CreerCarteJoueur(liste2);
+            //Pour avoir une ligne Bingo 4
+            carte1[4, 0] = 0;
+            carte1[4, 1] = 0;
+            carte1[4, 2] = 0;
+            carte1[4, 3] = 0;
+            carte1[4, 4] = 0;
+            //pour avoir diagonale2
+            carte1[4, 0] = 0;
+            carte1[3, 1] = 0;
+            carte1[1, 3] = 0;
+            carte1[0, 4] = 0;
+            //Pour avoir une colonne bingo
+            carte1[0, 3] = 0;
+            carte1[1, 3] = 0;
+            carte1[2, 3] = 0;
+            carte1[3, 3] = 0;
+            carte1[4, 3] = 0;
+            Console.WriteLine("Carte1:");
             program.AfficheAnnonceur(carte1);
+            Console.WriteLine();
+            program.Diagonale2Bingo(carte1);
+            Console.WriteLine("Bingo sur diagonale1 = "+ program.Diagonale1Bingo(carte1));
+            Console.WriteLine("Bingo sur diagonale2 = " + program.Diagonale2Bingo(carte1));
+            Console.WriteLine("LigneBingo  = " + program.LigneBingo(carte1));
+            Console.WriteLine("ColonneBingo  = " + program.ColonneBingo(carte1));
+            Console.WriteLine("Carte2:");
             program.AfficheAnnonceur(carte2);
+            Console.WriteLine("Carte3:");
             program.AfficheAnnonceur(carte3);
             int compteur = 75;
-           var myEnumerator =  liste2.GetEnumerator();
             while(compteur>50)
             {
                 int valeur = program.RandomBall(liste2);
@@ -72,6 +97,78 @@ namespace TestPrpjetBingo
                 compteur--;
             }          
             program.AfficheAnnonceur(Annonceur);
+        }
+        // Fonction qui permet de verifier s'il ya une ligne Bingo
+         public bool LigneBingo(int[,] carteJoueur)
+         {
+            int ligne = 0; 
+            bool hasBingo = false;
+            while(ligne < carteJoueur.GetLength(0))
+            {
+                int sommeLigne = 0;
+                for(int colonne = 0; colonne < carteJoueur.GetLength(1); colonne++)
+                {
+                    sommeLigne += carteJoueur[ligne,colonne];
+                }
+                if(sommeLigne == 0)
+                {
+                    hasBingo = true;
+                    break;
+                }
+                ligne++;
+            }
+            return hasBingo;        
+         }
+        // Fonction qui permet de verifier une Colonne Bingo
+        public bool ColonneBingo(int[,] carteJoueur)
+        {
+            int colonne = 0;
+            bool hasBingo = false;
+            while (colonne < carteJoueur.GetLength(1))
+            {
+                int sommeColonne = 0;
+                for (int ligne = 0; ligne < carteJoueur.GetLength(0); ligne++)
+                {
+                    sommeColonne += carteJoueur[ligne, colonne];
+                }
+                if (sommeColonne == 0)
+                {
+                    hasBingo = true;
+                    break;
+                }
+                colonne++;
+            }
+            return hasBingo;
+        }
+        // Fonction qui permet de verifier si une diagonale est Bingo
+        public bool Diagonale1Bingo(int[,] carteJoueur)
+        {
+            int diagonaleSomme = 0;
+            for(int ligne = 0; ligne < carteJoueur.GetLength(0); ligne++)
+            {
+                diagonaleSomme += carteJoueur[ligne,ligne];
+            }
+            //Console.WriteLine("Diagonale1Somme de carte2 = "+diagonaleSomme);
+            return diagonaleSomme == 0;
+
+        }
+        // Fonction qui permet de verifier que la deuxieme diagonale est Bingo
+        public bool Diagonale2Bingo(int[,] carteJoeur)
+        {
+            int diagonaleSomme = 0;
+            int ligne =  carteJoeur.GetLength(0)-1;
+            int colonne = 0;
+            while(ligne >= 0 && colonne < carteJoeur.GetLength(1))
+            {
+                diagonaleSomme += carteJoeur[ligne,colonne];
+                ligne--;
+                colonne++;
+            }
+            //Console.WriteLine("diagonale2Somme de carte1 = "+diagonaleSomme);
+            
+            return diagonaleSomme == 0;
+
+
         }
         // Fonction qui permet de retirer une boule au hazard dans le boulier
         public int RandomBall(List<int> liste)
