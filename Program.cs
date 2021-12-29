@@ -192,7 +192,7 @@ namespace TestPrpjetBingo
             List<int> listeB = new List<int>();
             int indice;
             int randomNumber;
-            int compteur = 0;
+            //int compteur = 0;
             Random random = new Random();
             while (listeB.Count < 5)
             {
@@ -202,10 +202,7 @@ namespace TestPrpjetBingo
                 {
                     if (!listeB.Contains(randomNumber))
                     {
-                        listeB.Add(randomNumber);
-                        
-                        compteur++;
-                        
+                        listeB.Add(randomNumber);                       
                     }
                 }               
             }
@@ -231,8 +228,6 @@ namespace TestPrpjetBingo
             }
             return listeB;
         }
-
-
         // Rechercher une carte dans le dictionnaire par son numero pour ensuite l'afficher
         public int[,] RechercherCarte(Dictionary<int, int[,]> dictionnaire)
         {
@@ -277,8 +272,7 @@ namespace TestPrpjetBingo
                 }
                 Console.WriteLine();
                 i++;
-            }
-            
+            }            
             Console.WriteLine("-----------------------------------------");
         }
         // Fonction qui permet d'afficher une carte du joueur,le boulier, la carte de l'annonceur
